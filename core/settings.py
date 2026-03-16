@@ -153,3 +153,5 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+HOTEL_MARKUP_PERCENT = int(os.getenv('HOTEL_MARKUP_PERCENT', 10))
