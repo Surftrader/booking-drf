@@ -7,5 +7,6 @@ class ResourceAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('user', 'resource', 'status', 'booking_date')
-    list_filter = ('status', 'booking_date')
+    list_display = ('id', 'user', 'resource', 'checkin_date', 'checkout_date', 'total_price', 'status')
+    list_filter = ('status', 'checkin_date', 'checkout_date')
+    search_fields = ('user__email', 'resource_title')
