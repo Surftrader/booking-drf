@@ -4,13 +4,27 @@ from .utils import AgodaScraper
 
 
 class ScrapeAgodaView(APIView):
-    # For now, we'll leave access to everyone for the test, then we'll add IsAdminUser
+    
     def post(self, request):
-        # We take the city from JSON or 'bali' by default
-        city = request.data.get('city', 'bali') 
-        scraper = AgodaScraper()
-        count = scraper.scrape_agoda(city)
         
-        return Response({
-            "message": f"Successfully scraped {count} hotels from Agoda for {city}"
-        })
+        currency = request.data.get('currency', 'UAH')    
+        city = request.data.get('city', 'Kyiv')
+        checkin = request.data.get('checkin')
+        checkout = request.data.get('checkout')
+        adults = request.data.get('adults')
+        rooms = request.data.get('rooms')
+        children = request.data.get('children')       
+
+        scraper = AgodaScraper(base_url="https://www.agoda.com/uk-ua/")
+
+        try:
+            count = scraper.scrape_agoda(
+                city=city, checkin=checkin, 
+                checkout=checkout, adults=adults, 
+                rooms=rooms, children=children,
+                currency_code=currency
+            )
+            return Response({"status": "success", "found": count})
+        except Exception as e:
+            # Catching our validation errors
+            return Response({"error": str(e)}, status=400)

@@ -11,6 +11,12 @@ services:
 
   web:
     build: .
+    platform: linux/x86_64
+    shm_size: '2gb'
+    stdin_open: true # for interactivity
+    tty: true
+    environment:
+      - PYTHONUNBUFFERED=1
     command: >
       sh -c "python wait-for-db.py &&
              python manage.py migrate &&

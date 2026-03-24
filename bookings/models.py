@@ -21,10 +21,10 @@ class Booking(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     
-    checkin_date = models.DateField()
-    checkout_date = models.DateField()
+    checkin_date = models.DateField(null=True, blank=True)
+    checkout_date = models.DateField(null=True, blank=True)
     adults = models.IntegerField(default=2)
     children = models.IntegerField(default=0)
     
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
